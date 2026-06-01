@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AWS Cloud Practitioner Certification</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ======== SCREEN 1: COURSE (2 Modules) ======== -->
+<div id="screen-course">
+  <div class="top-bar">
+    <div class="top-bar-left">☁️ AWS Certification Platform</div>
+    <div class="top-bar-right">Cloud Practitioner Course</div>
+  </div>
+  <div class="container">
+    <div class="course-header">
+      <div class="course-badge">📚 AWS Course</div>
+      <h1>AWS Cloud Practitioner</h1>
+      <p>Watch both video modules to unlock your certification test</p>
+      <div class="progress-wrap">
+        <div class="progress-top">
+          <span>Course Progress</span>
+          <span id="videoProgressText">0 / 2 modules watched</span>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-list">
+
+      <!-- MODULE 1 -->
+      <div class="video-card" id="vcard-1">
+        <div class="vthumb" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="openVideo(1)">
+          <div class="vthumb-icon">☁️</div>
+          <div class="play-circle" id="playCircle-1">▶</div>
+        </div>
+        <div class="vinfo">
+          <span class="vnum">MODULE 1 OF 2</span>
+          <h3>Cloud Computing & AWS Core Services</h3>
+          <p>What is cloud computing, AWS history, EC2, S3, Lambda and RDS — the services that power the cloud.</p>
+          <div class="vstatus" id="vstatus-1"><span class="dot dot-pending"></span> Not watched yet</div>
+        </div>
+        <button class="vbtn" id="vbtn-1" onclick="openVideo(1)">▶ Watch Now</button>
+      </div>
+
+      <!-- MODULE 2 -->
+      <div class="video-card video-locked" id="vcard-2">
+        <div class="vthumb" style="background:linear-gradient(135deg,#f093fb,#f5576c)">
+          <div class="vthumb-icon">🔐</div>
+          <div class="play-circle lock-circle">🔒</div>
+        </div>
+        <div class="vinfo">
+          <span class="vnum">MODULE 2 OF 2</span>
+          <h3>AWS Security, Pricing & Global Infrastructure</h3>
+          <p>IAM, Shared Responsibility Model, pricing models, Regions, Availability Zones and Support Plans.</p>
+          <div class="vstatus" id="vstatus-2"><span class="dot dot-pending"></span> Complete Module 1 first</div>
+        </div>
+        <button class="vbtn vbtn-locked" id="vbtn-2" disabled>🔒 Locked</button>
+      </div>
+
+    </div>
+
+    <div class="start-section">
+      <div class="all-done-msg" id="allDoneMsg" style="display:none">
+        🎉 Both modules completed! You are now ready for the certification test!
+      </div>
+      <button class="start-test-btn" id="startTestBtn" disabled onclick="goToForm()">
+        🔒 Watch Both Modules to Unlock Test
+      </button>
+      <p class="start-hint" id="startHint">Complete both video modules to enable this button</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ======== VIDEO POPUP PLAYER ======== -->
+<div id="videoPopup" class="popup-overlay" style="display:none">
+  <div class="video-popup-box">
+    <div class="vpopup-header">
+      <span id="vpopupTitle">Module 1</span>
+      <button class="vclose-btn" onclick="closeVideo()">✕ Close</button>
+    </div>
+    <div class="fake-screen" id="fakeScreen">
+      <div class="fake-screen-icon" id="fakeScreenIcon">☁️</div>
+      <div class="fake-screen-title" id="fakeScreenTitle">Cloud Computing & AWS Core Services</div>
+      <div class="wave-wrap" id="waveWrap" style="display:none">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div class="fake-screen-status" id="fakeScreenStatus">Press ▶ Play to start</div>
+    </div>
+    <div class="subtitle-bar" id="subtitleBar" style="display:none">
+      <span id="subtitleText"></span>
+    </div>
+    <div class="fake-controls">
+      <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlay()">▶ Play</button>
+      <div class="fake-prog-wrap">
+        <div class="fake-prog-bg">
+          <div class="fake-prog-fill" id="fakeProgFill"></div>
+        </div>
+        <span class="fake-timer" id="fakeTimer">0:00 / 3:00</span>
+      </div>
+      <span class="vol-icon">🔊</span>
+    </div>
+    <div class="vcomplete-area" id="vcompleteArea" style="display:none">
+      <div class="vcomplete-msg">✅ Module completed! Well done!</div>
+      <button class="vcomplete-btn" onclick="markVideoDone()">✓ Mark Complete & Continue →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ======== SCREEN 2: REGISTRATION FORM ======== -->
+<div id="screen-form" style="display:none">
+  <div class="top-bar">
+    <div class="top-bar-left">☁️ AWS Certification Platform</div>
+    <div class="top-bar-right">Registration Form</div>
+  </div>
+  <div class="container">
+    <div class="form-card">
+      <div class="form-top">
+        <div class="form-top-icon">📋</div>
+        <h2>Exam Registration Form</h2>
+        <p>Fill in your details. Your <strong>Full Name</strong> will appear on your certificate.</p>
+      </div>
+      <div class="form-fields">
+        <div class="field-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="inp-name" placeholder="e.g. Lahari Ganta" maxlength="60"/>
+          <small>⚠️ This exact name will be printed on your certificate</small>
+        </div>
+        <div class="field-group">
+          <label>Course Name <span class="req">*</span></label>
+          <input type="text" id="inp-course" value="AWS Cloud Practitioner" readonly/>
+          <small>Auto-filled from your completed course</small>
+        </div>
+        <div class="field-group">
+          <label>Qualification <span class="req">*</span></label>
+          <select id="inp-qual">
+            <option value="">-- Select your qualification --</option>
+            <option>B.Tech / B.E</option>
+            <option>M.Tech / M.E</option>
+            <option>BCA / MCA</option>
+            <option>BSc / MSc</option>
+            <option>MBA</option>
+            <option>Diploma</option>
+            <option>12th Grade / Intermediate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="inp-email" placeholder="your@email.com"/>
+        </div>
+        <div class="field-error" id="formError" style="display:none">
+          ⚠️ Please fill in all the fields before submitting.
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Submit & Start Exam →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ======== SCREEN 3: QUIZ — 10 QUESTIONS ======== -->
+<div id="screen-quiz" style="display:none">
+  <div class="top-bar">
+    <div class="top-bar-left">☁️ AWS Certification Platform</div>
+    <div class="top-bar-right" id="quizTopRight">Exam — Question 1 of 10</div>
+  </div>
+  <div class="container">
+    <div class="quiz-card">
+
+      <!-- ⏱️ EXAM TIMER BAR -->
+      <div class="timer-bar-wrap">
+        <div class="timer-bar-left">
+          <span class="timer-icon">⏱️</span>
+          <span class="timer-label">Time Remaining</span>
+        </div>
+        <div class="timer-display" id="timerDisplay">10:00</div>
+        <div class="timer-bar-bg">
+          <div class="timer-bar-fill" id="timerBarFill"></div>
+        </div>
+      </div>
+
+      <div class="quiz-top">
+        <div id="qCounterTxt">Question 1 of 10</div>
+        <div id="qScoreTxt" class="q-score-txt">Score: 0 / 0</div>
+      </div>
+      <div class="q-dots-row" id="qDotsRow"></div>
+
+      <!-- AI loader -->
+      <div id="aiLoader" class="ai-loader">
+        <div class="spinner"></div>
+        <p>🤖 AI is generating your exam questions...</p>
+        <small>Please wait a moment</small>
+      </div>
+
+      <!-- Questions area -->
+      <div id="quizContent" style="display:none">
+        <p class="q-label">Question <span id="qNumLabel">1</span> of 10</p>
+        <p class="q-text" id="qText">Loading...</p>
+        <div class="q-options" id="qOptions"></div>
+        <div class="ai-eval-row" id="aiEvalRow" style="display:none">
+          <div class="bdot"></div><div class="bdot"></div><div class="bdot"></div>
+          <span>Evaluating your answer...</span>
+        </div>
+        <button class="next-btn" id="nextBtn" style="display:none" onclick="nextQuestion()">Next Question →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ======== SCREEN 4: RESULT ======== -->
+<div id="screen-result" style="display:none">
+  <div class="top-bar">
+    <div class="top-bar-left">☁️ AWS Certification Platform</div>
+    <div class="top-bar-right">Exam Result</div>
+  </div>
+  <div class="container">
+    <div class="result-card">
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h2 id="resultTitle">Congratulations!</h2>
+      <div class="result-score" id="resultScore">8 / 10</div>
+      <p id="resultMsg">You passed!</p>
+      <div class="result-btns">
+        <button class="cert-dl-btn" id="certDlBtn" style="display:none" onclick="downloadCertificate()">📄 Download Certificate (PDF)</button>
+        <button class="retry-btn" id="retryBtn" style="display:none" onclick="retryExam()">🔄 Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="popup-overlay" style="display:none">
+  <div class="popup-box">
+    <div class="popup-emoji">🎉</div>
+    <h2>Successfully Certified!</h2>
+    <p id="successPopupMsg">Congratulations! You passed the AWS exam!</p>
+    <div class="popup-score-txt" id="successScoreTxt">Score: 8 / 10</div>
+    <button class="popup-action-btn" onclick="closeSuccessAndDownload()">📄 Download My Certificate</button>
+  </div>
+</div>
+
+<!-- FAIL POPUP -->
+<div id="failPopup" class="popup-overlay" style="display:none">
+  <div class="popup-box fail-box">
+    <div class="popup-emoji">😔</div>
+    <h2>Not Qualified — Try Next Time</h2>
+    <p id="failPopupMsg">You did not reach the passing score. Keep learning and try again!</p>
+    <div class="popup-score-txt fail-score-txt" id="failScoreTxt">Score: 5 / 10</div>
+    <p class="pass-note">Passing mark: 8 out of 10 correct answers</p>
+    <button class="popup-action-btn fail-action-btn" onclick="closeFailPopup()">Close & Try Again</button>
+  </div>
+</div>
+
+<!-- TIME UP POPUP -->
+<div id="timeUpPopup" class="popup-overlay" style="display:none">
+  <div class="popup-box fail-box">
+    <div class="popup-emoji">⏰</div>
+    <h2>Time's Up!</h2>
+    <p>Your 10-minute exam time has ended. Your answers have been submitted automatically.</p>
+    <div class="popup-score-txt fail-score-txt" id="timeUpScoreTxt">Score: 0 / 10</div>
+    <button class="popup-action-btn fail-action-btn" onclick="closeTimeUpPopup()">View My Results</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
